@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ama_2.homeautomation.Settings">
+
+    <ScrollView
+        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ScrollViewCount">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:text="Recipient Number: "
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:paddingStart="10dp"
+                        android:id="@+id/etPhoneNo"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittext"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:text="Lamb On: "
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        android:id="@+id/etLambOn"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittext"/>
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:text="Lamb Off: "
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        android:background="@drawable/edittext"
+                        android:id="@+id/etLambOff"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
+
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:text="Fan On: "
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        android:background="@drawable/edittext"
+                        android:id="@+id/etFanOn"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:text="Fan Off: "
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        android:background="@drawable/edittext"
+                        android:id="@+id/etFanOff"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:text="Conditioning On:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        android:background="@drawable/edittext"
+                        android:id="@+id/etConditioningOn"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="16dp"
+                        android:text="Conditioning Off:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="10dp"
+                        android:background="@drawable/edittext"
+                        android:id="@+id/etConditioningOff"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+    </ScrollView>
+
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnSave"
+            android:text="save"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnBack"
+            android:text="back"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>
+
