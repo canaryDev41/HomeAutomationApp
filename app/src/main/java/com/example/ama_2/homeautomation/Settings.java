@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener{
-    EditText etPhoneNo, etLambOff, etLambOn, etFanOff, etFanOn, etConditioningOff, etConditioningOn;
+    EditText etPhoneNo, etLambOff, etLambOn, etFanOff, etFanOn, etConditioningOff, etConditioningOn, etGarageDoorOff, etGarageDoorOn;
 
     Button btnSave, btnBack;
 
@@ -19,6 +19,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
     String fanOffCode;
     String conditioningOnCode;
     String conditioningOffCode;
+    String garageDoorOnCode;
+    String garageDoorOffCode;
     String phoneNo;
 
     @Override
@@ -33,6 +35,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
         etFanOn = (EditText)findViewById(R.id.etFanOn);
         etConditioningOff = (EditText)findViewById(R.id.etConditioningOff);
         etConditioningOn = (EditText)findViewById(R.id.etConditioningOn);
+        etGarageDoorOff = (EditText)findViewById(R.id.etGarageDoorOff);
+        etGarageDoorOn = (EditText)findViewById(R.id.etGarageDoorOn);
 
         fillCodes();
 
@@ -54,6 +58,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
         etFanOn.setText(shared.getFanOnCode());
         etConditioningOff.setText(shared.getConditioningOffCode());
         etConditioningOn.setText(shared.getConditioningOnCode());
+        etGarageDoorOff.setText(shared.getGarageDoorOffCode());
+        etGarageDoorOn.setText(shared.getGarageDoorOnCode());
+    }
+
+    private boolean validate(){
+        return !(phoneNo.equals("") || lambOnCode.equals("") || lambOffCode.equals("") || fanOffCode.equals("") || fanOnCode.equals("") || conditioningOffCode.equals("") || conditioningOnCode.equals("") || garageDoorOffCode.equals("") || garageDoorOnCode.equals(""));
     }
 
     @Override
@@ -66,10 +76,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
             fanOffCode = etFanOff.getText().toString();
             conditioningOnCode = etConditioningOn.getText().toString();
             conditioningOffCode = etConditioningOff.getText().toString();
+            garageDoorOnCode = etGarageDoorOn.getText().toString();
+            garageDoorOffCode = etGarageDoorOff.getText().toString();
 
             phoneNo = etPhoneNo.getText().toString();
 
-            if (phoneNo.equals("") || lambOnCode.equals("") || lambOffCode.equals("") || fanOffCode.equals("") || fanOnCode.equals("") || conditioningOffCode.equals("") || conditioningOnCode.equals("")){
+            if (!validate()){
 
                 Toast.makeText(getApplicationContext(), "you must fill out all the fields", Toast.LENGTH_LONG).show();
 
@@ -83,7 +95,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
                 SharedPrefManager.getInstance(getApplicationContext()).setConditioningOffCode(conditioningOffCode);
                 SharedPrefManager.getInstance(getApplicationContext()).setConditioningOnCode(conditioningOnCode);
 
+                SharedPrefManager.getInstance(getApplicationContext()).setGarageDoorOffCode(garageDoorOffCode);
+                SharedPrefManager.getInstance(getApplicationContext()).setGarageDoorOnCode(garageDoorOnCode);
+
                 SharedPrefManager.getInstance(getApplicationContext()).setPhoneNoCode(phoneNo);
+
+                Toast.makeText(this, "Data Saved Successfully!", Toast.LENGTH_LONG).show();
             }
 
         }else if(v == btnBack){

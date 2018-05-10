@@ -20,6 +20,9 @@ class SharedPrefManager {
     private static final String KEY_CONDITIONING_ON = "KEY_CONDITIONING_ON";
     private static final String KEY_CONDITIONING_OFF = "KEY_CONDITIONING_OFF";
 
+    private static final String KEY_GARAGE_DOOR_ON = "KEY_GARAGE_DOOR_ON";
+    private static final String KEY_GARAGE_DOOR_OFF = "KEY_GARAGE_DOOR_OFF";
+
     private static final String KEY_PHONE_NO = "KEY_PHONE_NO";
 
     SharedPrefManager(Context context){
@@ -117,6 +120,30 @@ class SharedPrefManager {
         return true;
     }
 
+    boolean setGarageDoorOnCode(String code){
+
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(KEY_GARAGE_DOOR_ON, code);
+
+        editor.apply();
+        return true;
+    }
+
+    boolean setGarageDoorOffCode(String code){
+
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(KEY_GARAGE_DOOR_OFF, code);
+
+        editor.apply();
+        return true;
+    }
+
     String getPhoneNo(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_PHONE_NO, null);
@@ -150,6 +177,16 @@ class SharedPrefManager {
     String getConditioningOffCode() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_CONDITIONING_OFF, null);
+    }
+
+    String getGarageDoorOnCode() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_GARAGE_DOOR_ON, null);
+    }
+
+    String getGarageDoorOffCode() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_GARAGE_DOOR_OFF, null);
     }
 
 }

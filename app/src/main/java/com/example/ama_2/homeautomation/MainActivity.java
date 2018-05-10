@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     Button btnAbout, btnExit, btnSettings;
-    Switch switchLamb, switchVan, switchConditioning;
+    Switch switchLamb, switchVan, switchConditioning, SwitchGarageDoor;
 
     SharedPrefManager shared;
 
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switchLamb = (Switch)findViewById(R.id.switchLamb);
         switchVan = (Switch)findViewById(R.id.switchFan);
         switchConditioning = (Switch)findViewById(R.id.switchConditioning);
+        SwitchGarageDoor = (Switch)findViewById(R.id.SwitchGarageDoor);
 
         btnAbout.setOnClickListener(this);
         btnExit.setOnClickListener(this);
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switchLamb.setOnCheckedChangeListener(this);
         switchVan.setOnCheckedChangeListener(this);
         switchConditioning.setOnCheckedChangeListener(this);
+        SwitchGarageDoor.setOnCheckedChangeListener(this);
 
         shared = new SharedPrefManager(getApplicationContext());
 
@@ -53,18 +55,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        if (v == btnAbout){
-
-            startActivity(new Intent(this, About.class));
-
-        }else if(v == btnExit){
-
-            finish();
-
-        }else if(v == btnSettings){
-
-            startActivity(new Intent(this, com.example.ama_2.homeautomation.Settings.class));
-
+        switch (v.getId()){
+            case R.id.btnAbout:
+                startActivity(new Intent(this, About.class));
+                break;
+            case R.id.btnExit:
+                finish();
+                break;
+            case R.id.btnSettings:
+                startActivity(new Intent(this, com.example.ama_2.homeautomation.Settings.class));
         }
 
     }
@@ -85,23 +84,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void performMessage(CompoundButton buttonView){
+        if  (shared.getPhoneNo() == null){
+            Toast.makeText(this, "Sorry there is no phone number to receive the message\n! Check your application settings first!", Toast.LENGTH_LONG).show();
+            return;
+        }
         if (buttonView == switchLamb){
             if (!switchLamb.isChecked())
                 sendSms(shared.getPhoneNo(),shared.getLambOffCode());
             else
                 sendSms(shared.getPhoneNo(),shared.getLambOnCode());
         }
+
         if (buttonView == switchVan) {
             if (!switchVan.isChecked())
                 sendSms(shared.getPhoneNo(),shared.getFanOffCode());
             else
                 sendSms(shared.getPhoneNo(),shared.getFanOnCode());
         }
+
         if (buttonView == switchConditioning){
             if (!switchConditioning.isChecked())
                 sendSms(shared.getPhoneNo(),shared.getConditioningOffCode());
             else
                 sendSms(shared.getPhoneNo(),shared.getConditioningOnCode());
+        }
+
+        if (buttonView == SwitchGarageDoor){
+            if (!SwitchGarageDoor.isChecked())
+                sendSms(shared.getPhoneNo(),shared.getGarageDoorOffCode());
+            else
+                sendSms(shared.getPhoneNo(),shared.getGarageDoorOnCode());
         }
     }
 
