@@ -18,9 +18,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
     Button btnAbout, btnExit, btnSettings;
     Switch switchLamb, switchVan, switchConditioning, SwitchGarageDoor;
+
+    CompoundButton currentSwitch;
+    boolean isChecked;
 
     SharedPrefManager shared;
 
@@ -79,58 +81,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private boolean isPermissionGranted(){
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void performMessage(CompoundButton buttonView){
+    private void performMessage(CompoundButton buttonView,final boolean isChecked){
         if  (shared.getPhoneNo() == null){
-            Toast.makeText(this, "Sorry there is no phone number to receive the message\n! Check your application settings first!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Sorry there is no phone number\n! Check your application settings first!", Toast.LENGTH_LONG).show();
             return;
         }
-        if (buttonView == switchLamb){
-            if (!switchLamb.isChecked())
-                sendSms(shared.getPhoneNo(),shared.getLambOffCode());
-            else
-                sendSms(shared.getPhoneNo(),shared.getLambOnCode());
+
+        switch (buttonView.getId()){
+            case R.id.switchLamb:
+                if (!isChecked)
+                    sendSms(shared.getPhoneNo(),shared.getLambOffCode());
+                else
+                    sendSms(shared.getPhoneNo(),shared.getLambOnCode());
+            break;
+            case R.id.switchFan:
+                if (!isChecked)
+                    sendSms(shared.getPhoneNo(),shared.getFanOffCode());
+                else
+                    sendSms(shared.getPhoneNo(),shared.getFanOnCode());
+            break;
+            case R.id.switchConditioning:
+                if (!isChecked)
+                    sendSms(shared.getPhoneNo(),shared.getConditioningOffCode());
+                else
+                    sendSms(shared.getPhoneNo(),shared.getConditioningOnCode());
+            break;
+            case R.id.SwitchGarageDoor:
+                if (!isChecked)
+                    sendSms(shared.getPhoneNo(),shared.getGarageDoorOffCode());
+                else
+                    sendSms(shared.getPhoneNo(),shared.getGarageDoorOnCode());
+            break;
         }
 
-        if (buttonView == switchVan) {
-            if (!switchVan.isChecked())
-                sendSms(shared.getPhoneNo(),shared.getFanOffCode());
-            else
-                sendSms(shared.getPhoneNo(),shared.getFanOnCode());
-        }
+    }
 
-        if (buttonView == switchConditioning){
-            if (!switchConditioning.isChecked())
-                sendSms(shared.getPhoneNo(),shared.getConditioningOffCode());
-            else
-                sendSms(shared.getPhoneNo(),shared.getConditioningOnCode());
-        }
 
-        if (buttonView == SwitchGarageDoor){
-            if (!SwitchGarageDoor.isChecked())
-                sendSms(shared.getPhoneNo(),shared.getGarageDoorOffCode());
-            else
-                sendSms(shared.getPhoneNo(),shared.getGarageDoorOnCode());
-        }
+    private boolean isPermissionGranted(){
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
 
+        currentSwitch = buttonView;
+        this.isChecked = isChecked;
+
         if(isPermissionGranted()){
             // Send SMS permission granted
-            performMessage(buttonView);
+            performMessage(currentSwitch, isChecked);
 
         }else{
             // Send SMS permission not granted
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.SEND_SMS},
-                    1);
-
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.SEND_SMS},1);
         }
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == 0) {
+            //permission granted successfully
+            performMessage(currentSwitch, isChecked);
+        }else{
+            Toast.makeText(this, "Please Allow App to Send SMS First, Then Try Again!", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }
